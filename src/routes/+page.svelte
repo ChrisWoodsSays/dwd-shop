@@ -6,7 +6,7 @@
     links: [
       { name: "Instagram", url: "https://instagram.com/drawingwithdata" },
       { name: "Etsy", url: "https://etsy.com/shop/drawingwithdata" },
-      { name: "Website", url: "https://drawingwithdata.com" }
+      { name: "Website", url: "https://wwwdrawingwithdata.com" }
     ]
   };
 
