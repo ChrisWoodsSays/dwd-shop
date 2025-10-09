@@ -13,8 +13,7 @@
   // Example poster items — replace src with your images and update descriptions
   const posters = [
     { src: '/images/JP1.jpeg', alt: 'Poster 1', description: 'A gospel journey print — overview of core themes.' },
-    { src: '/images/JP2.jpeg', alt: 'Poster 2', description: 'Chronological map with visual landmarks.' },
-    { src: '/images/JP3.jpeg', alt: 'Poster 3', description: 'Key characters and relationships illustrated.' },
+    { src: '/images/JP2.jpeg', alt: 'Poster 2', description: 'Chronological map with visual landmarks.' }
   ];
 </script>
 
