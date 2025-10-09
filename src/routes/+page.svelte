@@ -33,7 +33,7 @@
   </header>
 
   <section class="gallery" aria-label="Poster gallery">
-    <h2 class="gallery-title">The Gospel Journey Planner</h2>
+    <h2 class="gallery-title">The Gospel Journey Planner (c) 2025 Chris Woods</h2>
     <div class="grid">
       {#each posters as p}
         <figure class="poster">
