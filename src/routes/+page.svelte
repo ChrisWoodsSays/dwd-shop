@@ -1,20 +1,63 @@
 <script>
-  const profile = {
-    name: "Chris Woods",
-    strapline: "Information Designer & Artist",
-    image: "images/Profile Nov 24 Square.jpg",
-    links: [
-      { name: "Instagram", url: "https://instagram.com/drawingwithdata" },
-      { name: "Etsy", url: "https://etsy.com/shop/drawingwithdata" },
-      { name: "Website", url: "https://www.drawingwithdata.com" }
-    ]
-  };
+  import { onMount } from 'svelte';
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import { projects } from '$lib/data/projects.js';
 
-  // Example poster items — replace src with your images and update descriptions
-  const posters = [
-    { src: '/images/JP1.jpeg', alt: 'Poster 1', description: 'A gospel journey print — overview of core themes.' },
-    { src: '/images/JP2.jpeg', alt: 'Poster 2', description: 'Chronological map with visual landmarks.' }
-  ];
+  gsap.registerPlugin(ScrollTrigger);
+
+  onMount(() => {
+  // Hero animation
+  const tl = gsap.timeline({ defaults: { ease: 'power2.out', duration: 1 } });
+  tl.from('header img', { opacity: 0, y: 40 })
+    .from('header h1', { opacity: 0, y: 20 }, '-=0.6')
+    .from('header p', { opacity: 0, y: 20, stagger: 0.15 }, '-=0.4');
+
+  // Scroll-triggered section animations
+  const sections = gsap.utils.toArray('section');
+  sections.forEach((section) => {
+    const img = section.querySelector('img');
+    const content = section.querySelector('.content');
+
+    // Animate the section wrapper itself
+    gsap.fromTo(
+      section,
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 85%',
+          toggleActions: 'play none none none',
+        },
+      }
+    );
+
+    // Optional: stagger image and content slightly for nice effect
+    gsap.fromTo(
+      [img, content],
+      { opacity: 0, y: 20 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: 'power2.out',
+        stagger: 0.15,
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 85%',
+          toggleActions: 'play none none none',
+        },
+      }
+    );
+  });
+});
+
+
+
 </script>
 
 <main>
@@ -45,159 +88,172 @@
 </main>
 
 <style>
-  :global(html, body) {
-    height: 100%;
-    margin: 0;
-    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+  @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap');
 
   main {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    background: linear-gradient(to bottom, #0077ff 0%, white 100%); /* flipped gradient */
-    color: white;
+    font-family: 'Comfortaa', cursive;
+    color: #222;
+    background: #fff;
   }
 
-  .hero {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 3rem 1rem;
+  header {
     text-align: center;
+    padding: 4rem 1rem 3rem;
+    overflow: hidden;
   }
 
-  .profile {
-    max-width: 780px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .profile-image {
-    width: 150px;
-    height: 150px;
+  header img {
+    width: 160px;
+    height: 160px;
     border-radius: 50%;
     object-fit: cover;
-    border: 4px solid rgba(255,255,255,0.9);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-    margin-bottom: 1.25rem;
-    background: #eee;
+    margin-bottom: 1rem;
+    border: 4px solid #4169e1;
   }
 
-  h1 {
-    font-size: 2rem;
-    margin: 0.25rem 0;
-    line-height: 1.1;
-    text-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  header h1 {
+    color: #4169e1;
+    font-size: 2.7rem;
+    margin-bottom: 0.5rem;
   }
 
-  .strapline {
-    font-size: 1.05rem;
-    font-weight: 300;
-    margin: 0.5rem 0 1.5rem 0;
-    max-width: 90%;
-    text-shadow: 0 1px 4px rgba(0,0,0,0.22);
+  header p {
+    max-width: 600px;
+    margin: 0.6rem auto;
+    font-size: 1.1rem;
+    line-height: 1.5;
   }
 
-  .buttons {
+  header a {
+    color: #4169e1;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  section {
     display: flex;
-    gap: 0.8rem;
     flex-direction: column;
-    width: 100%;
     align-items: center;
-    justify-content: center;
-    margin: 0 auto;
+    margin: 3rem 0;
+    opacity: 0; /* hidden until GSAP fades in */
+  }
+
+  section img {
+    width: 100%;
+    max-height: 80vh;
+    object-fit: cover;
+    border-radius: 0.5rem;
+  }
+
+  .content {
+    padding: 1.5rem;
+    max-width: 900px;
+  }
+
+  .content h2 {
+    color: #4169e1;
+    margin-bottom: 0.5rem;
+  }
+
+  .content p {
+    line-height: 1.5;
+    margin-bottom: 1rem;
   }
 
   .button {
-    background: rgba(255,255,255,0.15);
+    display: inline-block;
+    background: #4169e1;
     color: white;
     text-decoration: none;
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
-    font-weight: 600;
-    transition: background 0.18s ease, transform 0.15s ease;
-    min-width: 160px;
+    padding: 0.75rem 1.25rem;
+    border-radius: 999px;
+    transition: 0.2s;
+  }
+
+  .button:hover {
+    background: #2746b3;
+  }
+
+  footer {
     text-align: center;
+    padding: 2rem;
+    font-size: 0.9rem;
+    color: #777;
   }
 
-  .button:hover { transform: translateY(-3px); background: rgba(255,255,255,0.25); }
-
-  .gallery {
-    background: transparent;
-    color: #0b1b2b;
-    padding: 3rem 1rem 6rem 1rem;
+  footer a {
+    color: #4169e1;
+    text-decoration: none;
   }
 
-  .gallery-title {
-    color: #0b1b2b; /* dark color for contrast */
-    text-align: center;
-    margin: 0 0 1.5rem 0;
-    font-size: 1.5rem;
-    text-shadow: none;
+  @media (min-width: 768px) {
+    section {
+      flex-direction: row;
+      align-items: stretch;
+    }
+
+    section:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+
+    section img {
+      width: 50%;
+    }
+
+    .content {
+      width: 50%;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
   }
 
-  .grid {
-    display: grid;
-    gap: 1.5rem;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    align-items: start;
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-  .poster {
-    background: white;
-    border-radius: 6px;
-    padding: 0.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    box-shadow: 0 18px 30px rgba(6,18,50,0.25), 0 6px 12px rgba(6,18,50,0.14); /* slightly stronger shadows */
-    transform-origin: center;
-    transition: transform 0.18s ease, box-shadow 0.18s ease;
-  }
-
-  .poster img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 4px;
-    object-fit: cover;
-  }
-
-  .poster figcaption {
-    margin-top: 0.65rem;
-    font-size: 0.95rem;
-    color: #0b1b2b;
-    text-align: center;
-    padding: 0 0.25rem 0.6rem 0.25rem;
-  }
-
-  .poster:hover {
-    transform: translateY(-8px) rotate(-0.25deg);
-    box-shadow: 0 30px 50px rgba(6,18,50,0.28), 0 10px 18px rgba(6,18,50,0.16); /* slightly stronger hover shadows */
-  }
-
-  @media (max-width: 480px) {
-    .gallery { padding-bottom: 4rem; }
-    .buttons { width: 100%; }
-    .button { width: 100%; max-width: none; }
-  }
-
-  @media (min-width: 600px) {
-    h1 { font-size: 2.5rem; }
-    .strapline { font-size: 1.15rem; }
-    .buttons { flex-direction: row; }
-    .button { min-width: 140px; }
-  }
-
-  @media (min-width: 1200px) {
-    .hero { padding-top: 4.5rem; padding-bottom: 4.5rem; }
-    .gallery { padding-top: 4rem; }
+  /* Featured Etsy print styling */
+  section.featured {
+    background: #f4f8ff;
+    border-top: 4px solid #4169e1;
+    border-bottom: 4px solid #4169e1;
+    padding: 2rem 0;
   }
 </style>
+
+<main>
+  <header>
+    <img src="/images/Chris Nov 24 Square.jpg" alt="Chris Woods" />
+    <h1>Drawing with Data</h1>
+    <p>
+      Data, insight and design, mixed with technology, enable us to see what’s
+      going on in the world, tell stories that matter, and make a difference.
+    </p>
+    <p>
+      I can help bring your data to life through static or interactive
+      visualisation — with a focus on Christian organisations, active travel,
+      cycling, environment and social justice.
+    </p>
+    <p>
+      <a href="https://www.linkedin.com/in/chriswooods" target="_blank"
+        >Connect on LinkedIn</a
+      >
+    </p>
+  </header>
+
+  {#each projects as project}
+    <section class:featured={project.featured}>
+      <img src={project.image} alt={project.title} />
+      <div class="content">
+        <h2>{project.title}</h2>
+        <p>{project.description}</p>
+        {#if project.link}
+          <a class="button" href={project.link} target="_blank">
+            {project.featured ? 'Visit Shop' : 'View Project'}
+          </a>
+        {/if}
+      </div>
+    </section>
+  {/each}
+
+  <footer>
+    <p>© Chris Woods 2016–25 | <a href="https://html5up.net">HTML5 UP</a></p>
+  </footer>
+</main>
