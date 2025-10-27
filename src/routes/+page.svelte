@@ -7,85 +7,34 @@
   gsap.registerPlugin(ScrollTrigger);
 
   onMount(() => {
-  // Hero animation
-  const tl = gsap.timeline({ defaults: { ease: 'power2.out', duration: 1 } });
-  tl.from('header img', { opacity: 0, y: 40 })
-    .from('header h1', { opacity: 0, y: 20 }, '-=0.6')
-    .from('header p', { opacity: 0, y: 20, stagger: 0.15 }, '-=0.4');
+    // Hero animation
+    const tl = gsap.timeline({ defaults: { ease: 'power2.out', duration: 1 } });
+    tl.from('.hero-text h1', { opacity: 0, y: 30 })
+      .from('.hero-text p', { opacity: 0, y: 20, stagger: 0.15 }, '-=0.6')
+      .from('.hero-nav a', { opacity: 0, y: 20, stagger: 0.1 }, '-=0.4')
+      .from('.hero-image', { opacity: 0, x: 40 }, '-=1');
 
-  // Scroll-triggered section animations
-  const sections = gsap.utils.toArray('section');
-  sections.forEach((section) => {
-    const img = section.querySelector('img');
-    const content = section.querySelector('.content');
-
-    // Animate the section wrapper itself
-    gsap.fromTo(
-      section,
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: section,
-          start: 'top 85%',
-          toggleActions: 'play none none none',
-        },
-      }
-    );
-
-    // Optional: stagger image and content slightly for nice effect
-    gsap.fromTo(
-      [img, content],
-      { opacity: 0, y: 20 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: 'power2.out',
-        stagger: 0.15,
-        scrollTrigger: {
-          trigger: section,
-          start: 'top 85%',
-          toggleActions: 'play none none none',
-        },
-      }
-    );
+    // Scroll-triggered project animations
+    gsap.utils.toArray('.project').forEach((section) => {
+      const overlay = section.querySelector('.overlay');
+      gsap.fromTo(
+        overlay,
+        { opacity: 0, y: 40 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 80%',
+            toggleActions: 'play none none none'
+          }
+        }
+      );
+    });
   });
-});
-
-
-
 </script>
-
-<main>
-  <header class="hero">
-    <div class="profile">
-      <img src={profile.image} alt="Chris Woods" class="profile-image" />
-      <h1>{profile.name}</h1>
-      <p class="strapline">{profile.strapline}</p>
-      <div class="buttons">
-        {#each profile.links as link}
-          <a href={link.url} target="_blank" rel="noopener noreferrer" class="button">{link.name}</a>
-        {/each}
-      </div>
-    </div>
-  </header>
-
-  <section class="gallery" aria-label="Poster gallery">
-    <h2 class="gallery-title">The Gospel Journey Planner (c) 2025 Chris Woods</h2>
-    <div class="grid">
-      {#each posters as p}
-        <figure class="poster">
-          <img src={p.src} alt={p.alt} loading="lazy" />
-          <figcaption>{p.description}</figcaption>
-        </figure>
-      {/each}
-    </div>
-  </section>
-</main>
 
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap');
@@ -96,84 +45,135 @@
     background: #fff;
   }
 
-  header {
-    text-align: center;
-    padding: 4rem 1rem 3rem;
-    overflow: hidden;
+  /* Hero section */
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* vertical alignment */
+  padding: 2rem 5%; /* add horizontal padding for edge spacing */
+  gap: 1rem;
+  flex-wrap: wrap; /* allow stacking on narrow screens */
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 200px; /* prevent nav links from collapsing too early */
+}
+
+.hero-content h1 {
+  margin: 0;
+  font-size: 2.5rem;
+  color: #4169e1;
+}
+
+.hero-nav {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.hero-nav a {
+  text-decoration: none;
+  color: #4169e1;
+  font-weight: 500;
+}
+
+.hero-nav a:hover {
+  color: #2746b3;
+}
+
+.hero-image {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Mobile adjustments */
+@media(max-width: 767px){
+  .hero {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem 3%;
   }
 
-  header img {
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
-    object-fit: cover;
+  .hero-content {
+    order: 2; /* so image can be first if desired */
+  }
+
+  .hero-image {
     margin-bottom: 1rem;
-    border: 4px solid #4169e1;
   }
 
-  header h1 {
-    color: #4169e1;
-    font-size: 2.7rem;
-    margin-bottom: 0.5rem;
+  .hero-nav {
+    gap: 1rem;
   }
 
-  header p {
-    max-width: 600px;
-    margin: 0.6rem auto;
-    font-size: 1.1rem;
-    line-height: 1.5;
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+}
+
+  /* Projects */
+  #projects {
+    margin: 0;
   }
 
-  header a {
-    color: #4169e1;
-    text-decoration: none;
-    font-weight: bold;
+  .project {
+    position: relative;
+    width: 100%;
+    margin: 0; /* remove gaps between projects */
   }
 
-  section {
+  .project img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  .overlay {
+    position: absolute;
+    bottom: 0; /* overlay at bottom of image */
+    left: 0;
+    width: 100%;
+    padding: 1rem;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    margin: 3rem 0;
-    opacity: 0; /* hidden until GSAP fades in */
+    justify-content: flex-end;
+    background: linear-gradient(to top, rgba(0,0,0,0.6), rgba(0,0,0,0.0));
+    color: #fff;
+    opacity: 0; /* GSAP animates to 1 */
   }
 
-  section img {
-    width: 100%;
-    max-height: 80vh;
-    object-fit: cover;
-    border-radius: 0.5rem;
+  .overlay h2 {
+    margin: 0 0 0.3rem 0;
+    font-size: 1.8rem;
   }
 
-  .content {
-    padding: 1.5rem;
-    max-width: 900px;
+  .overlay p {
+    margin: 0 0 0.5rem 0;
+    font-size: 1rem;
+    max-width: 600px;
   }
 
-  .content h2 {
-    color: #4169e1;
-    margin-bottom: 0.5rem;
-  }
-
-  .content p {
-    line-height: 1.5;
-    margin-bottom: 1rem;
-  }
-
-  .button {
-    display: inline-block;
+  .overlay a.button {
+    align-self: flex-start;
+    padding: 0.5rem 1rem;
     background: #4169e1;
-    color: white;
+    border-radius: 0.5rem;
     text-decoration: none;
-    padding: 0.75rem 1.25rem;
-    border-radius: 999px;
-    transition: 0.2s;
+    color: #fff;
+    font-weight: 500;
+    transition: background 0.2s;
   }
 
-  .button:hover {
+  .overlay a.button:hover {
     background: #2746b3;
   }
 
+  /* Footer */
   footer {
     text-align: center;
     padding: 2rem;
@@ -186,73 +186,64 @@
     text-decoration: none;
   }
 
-  @media (min-width: 768px) {
-    section {
-      flex-direction: row;
-      align-items: stretch;
+  /* Mobile adjustments */
+  @media (max-width: 767px) {
+    .overlay {
+      padding: 0.75rem;
     }
 
-    section:nth-child(even) {
-      flex-direction: row-reverse;
+    .overlay h2 {
+      font-size: 1.5rem;
     }
 
-    section img {
-      width: 50%;
+    .overlay p {
+      font-size: 0.95rem;
     }
 
-    .content {
-      width: 50%;
-      padding: 2rem;
-      display: flex;
+    .hero {
       flex-direction: column;
-      justify-content: center;
+      align-items: flex-start;
     }
-  }
 
-  /* Featured Etsy print styling */
-  section.featured {
-    background: #f4f8ff;
-    border-top: 4px solid #4169e1;
-    border-bottom: 4px solid #4169e1;
-    padding: 2rem 0;
+    .hero-nav {
+      justify-content: flex-start;
+    }
   }
 </style>
 
 <main>
-  <header>
-    <img src="/images/Chris Nov 24 Square.jpg" alt="Chris Woods" />
+<!-- Hero Intro -->
+<section class="hero">
+  <div class="hero-content">
     <h1>Drawing with Data</h1>
-    <p>
-      Data, insight and design, mixed with technology, enable us to see what’s
-      going on in the world, tell stories that matter, and make a difference.
-    </p>
-    <p>
-      I can help bring your data to life through static or interactive
-      visualisation — with a focus on Christian organisations, active travel,
-      cycling, environment and social justice.
-    </p>
-    <p>
-      <a href="https://www.linkedin.com/in/chriswooods" target="_blank"
-        >Connect on LinkedIn</a
-      >
-    </p>
-  </header>
+    <div class="hero-nav">
+      <a href="https://www.etsy.com/uk/listing/xxxx" target="_blank">Buy Gospel Journey Planner</a>
+      <a href="#projects">Portfolio</a>
+      <a href="#services">My Services</a>
+    </div>
+  </div>
+  <img src="/images/Chris Nov 24 Square.jpg" alt="Chris Woods" class="hero-image" />
+</section>
 
-  {#each projects as project}
-    <section class:featured={project.featured}>
-      <img src={project.image} alt={project.title} />
-      <div class="content">
-        <h2>{project.title}</h2>
-        <p>{project.description}</p>
-        {#if project.link}
-          <a class="button" href={project.link} target="_blank">
-            {project.featured ? 'Visit Shop' : 'View Project'}
-          </a>
-        {/if}
+  <!-- Project Gallery -->
+  <section id="projects">
+    {#each projects as project}
+      <div class="project">
+        <img src={project.image} alt={project.title} />
+        <div class="overlay">
+          <div>
+            <h2>{project.title}</h2>
+            <p>{project.description}</p>
+          </div>
+          {#if project.link}
+            <a class="button" href={project.link} target="_blank">{project.featured ? 'Buy Print' : 'View Project'}</a>
+          {/if}
+        </div>
       </div>
-    </section>
-  {/each}
+    {/each}
+  </section>
 
+  <!-- Footer -->
   <footer>
     <p>© Chris Woods 2016–25 | <a href="https://html5up.net">HTML5 UP</a></p>
   </footer>
