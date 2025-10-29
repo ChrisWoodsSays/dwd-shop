@@ -4,6 +4,9 @@
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
   import { projects } from '$lib/data/projects.js';
   let featuredItems = [];
+    const featuredTitle = 'Gospel Journey Planner';
+    const featuredText = 'Beautifully designed visual guides to help you explore the Gospel story. Printed on high-quality art paper — perfect for gifts or study spaces.';
+  const featuredLink = 'https://www.etsy.com/uk/listing/xxxx';
 
   gsap.registerPlugin(ScrollTrigger);
 
@@ -44,24 +47,25 @@
     // Example featured items array
     featuredItems = [
       {
-        image: '/images/featured1.jpg',
+        image: '/images/JP2.jpg',
         title: 'Gospel Journey Planner',
         description: 'Plan your journey through the Bible with clarity and ease.',
         link: 'https://www.etsy.com/uk/listing/xxxx'
       },
       {
-        image: '/images/featured2.jpg',
+        image: '/images/JP2.jpg',
         title: 'Data Visualization Print',
         description: 'Beautifully designed print for data enthusiasts.',
         link: 'https://www.etsy.com/uk/listing/yyyy'
       },
       {
-        image: '/images/featured3.jpg',
+        image: '/images/JP3.jpg',
         title: 'Interactive Dashboard',
         description: 'Engage with your data interactively online.',
         link: 'https://www.etsy.com/uk/listing/zzzz'
       }
     ];
+
 
 
   });
@@ -84,19 +88,21 @@
   }
 
   /* ===== HERO ===== */
-  .hero-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 1.5rem;
-    position: relative; /* for profile image */
-  }
+.hero-top {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  position: relative;
+}
 
-  .hero-left {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
+/* Keep title + nav stacked on the left */
+.hero-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
 
   .hero-title {
     font-size: 2.2rem;
@@ -120,16 +126,16 @@
     color: #2746b3;
   }
 
-  /* profile image: always top right */
-  .hero-profile {
-    width: 84px;
-    height: 84px;
-    border-radius: 50%;
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    right: 0;
-  }
+  /* Profile image — always top-right */
+.hero-profile {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
 
   .hero-intro {
     margin-bottom: 3rem;
@@ -139,71 +145,93 @@
     font-size: 1.05rem;
   }
 
-    .featured-grid {
-    display: flex;
-    gap: 2rem;
-    justify-content: space-between;
+  /* ===== FEATURED SECTION ===== */
+.featured-section {
+  margin: 3rem 0;
+}
+
+.featured-grid {
+  display: flex;
+  justify-content: center; /* keeps it centered if space remains */
+  align-items: flex-start;
+  gap: 1rem; /* tighter gap between images */
+  flex-wrap: nowrap; /* prevent wrapping on wide screens */
+}
+
+.featured-item {
+  flex: 1 1 0;
+  display: flex;
+  justify-content: center;
+}
+
+.featured-item img {
+  width: 100%;
+  max-width: 340px; /* fits better across screens */
+  height: auto;
+  border-radius: 6px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+  display: block;
+}
+
+/* Shared text + button below all three */
+.featured-info {
+  margin-top: 1.5rem;
+  text-align: center;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.featured-info h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.5rem;
+  color: #222;
+}
+
+.featured-info p {
+  margin: 0 0 1rem 0;
+  color: #333;
+  line-height: 1.45;
+  font-size: 1rem;
+}
+
+.featured-info .button {
+  display: inline-block;
+  padding: 0.6rem 1.1rem;
+  background: #4169e1;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 600;
+}
+.featured-info .button:hover {
+  background: #2746b3;
+}
+
+/* Stack images vertically on smaller screens */
+@media (max-width: 900px) {
+  .featured-grid {
     flex-wrap: wrap;
+    gap: 1.25rem;
   }
-
   .featured-item {
-    flex: 1 1 calc(33.333% - 1.33rem); /* 3 items per row with gaps */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    margin-bottom: 2rem;
+    flex: 1 1 100%;
   }
-
-  .featured-item img {
-    width: 100%;
-    max-width: 300px;
-    height: auto;
-    border-radius: 4px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.05);
-    margin-bottom: 0.75rem;
-  }
-
-  .featured-item h3 {
-    margin: 0.5rem 0 0.25rem 0;
-    font-size: 1.25rem;
-    color: #222;
-  }
-
-  .featured-item p {
-    font-size: 0.95rem;
-    color: #333;
-    margin-bottom: 0.5rem;
-  }
-
-  .featured-item a.button {
-    padding: 0.5rem 0.9rem;
-    background: #4169e1;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 4px;
-    font-weight: 600;
-  }
-
-  .featured-item a.button:hover {
-    background: #2746b3;
-  }
-
-  /* Responsive: stack items vertically on narrow screens */
-  @media (max-width: 900px) {
-    .featured-item {
-      flex: 1 1 100%;
-    }
-  }
+}
 
   /* ===== PROJECTS ===== */
   .project {
     display: flex;
     gap: 3rem;
-    margin-bottom: 3rem;
-    border-bottom: 1px solid rgba(0,0,0,0.08);
-    padding-bottom: 2rem;
     align-items: flex-start;
+    margin: 4rem 0;
+    padding: 2rem 0;
+    border-top: 1px solid rgba(0,0,0,0.08);
+  }
+
+  .project:first-of-type {
+    border-top: none;
+    padding-top: 0;
   }
 
   .project.left-image {
@@ -262,6 +290,7 @@
     align-self: flex-start;
     font-weight: 600;
   }
+
   .project-content a.button:hover {
     background: #2746b3;
   }
@@ -288,6 +317,18 @@
       flex: 1 1 100%;
     }
     .project-image { min-height: 220px; }
+
+    /* Keep profile photo in top-right even when wrapping */
+    .hero-top {
+      display: block;
+      position: relative;
+    }
+
+    .hero-profile {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
   }
 
   @media (max-width: 520px) {
@@ -296,6 +337,7 @@
     .hero-profile { width: 68px; height: 68px; }
   }
 </style>
+
 
 <main>
   <!-- HERO -->
@@ -320,21 +362,24 @@
     cycling, environment and social justice.
   </p>
 
-  <!-- FEATURED SECTION -->
-<section id="featured" style="margin-bottom: 3rem;">
+<!-- Featured Section -->
+<section id="featured">
   <div class="featured-grid">
     {#each featuredItems as item}
       <div class="featured-item">
         <img src={item.image} alt={item.title} />
-        <h3>{item.title}</h3>
-        <p>{item.description}</p>
-        {#if item.link}
-          <a class="button" href={item.link} target="_blank" rel="noopener">Buy</a>
-        {/if}
       </div>
     {/each}
   </div>
+
+  <!-- Shared title, text, and button below all images -->
+  <div class="featured-info">
+    <h3>{featuredTitle}</h3>
+    <p>{featuredText}</p>
+    <a href={featuredLink} class="button" target="_blank" rel="noopener">Buy</a>
+  </div>
 </section>
+
 
   <!-- PROJECTS -->
   <section id="projects" aria-label="portfolio">
