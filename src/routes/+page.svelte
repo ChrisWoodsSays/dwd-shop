@@ -3,6 +3,7 @@
   import { gsap } from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
   import { projects } from '$lib/data/projects.js';
+  let featuredItems = [];
 
   gsap.registerPlugin(ScrollTrigger);
 
@@ -38,6 +39,31 @@
         }
       });
     });
+
+
+    // Example featured items array
+    featuredItems = [
+      {
+        image: '/images/featured1.jpg',
+        title: 'Gospel Journey Planner',
+        description: 'Plan your journey through the Bible with clarity and ease.',
+        link: 'https://www.etsy.com/uk/listing/xxxx'
+      },
+      {
+        image: '/images/featured2.jpg',
+        title: 'Data Visualization Print',
+        description: 'Beautifully designed print for data enthusiasts.',
+        link: 'https://www.etsy.com/uk/listing/yyyy'
+      },
+      {
+        image: '/images/featured3.jpg',
+        title: 'Interactive Dashboard',
+        description: 'Engage with your data interactively online.',
+        link: 'https://www.etsy.com/uk/listing/zzzz'
+      }
+    ];
+
+
   });
 </script>
 
@@ -111,6 +137,63 @@
     color: #333;
     line-height: 1.48;
     font-size: 1.05rem;
+  }
+
+    .featured-grid {
+    display: flex;
+    gap: 2rem;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .featured-item {
+    flex: 1 1 calc(33.333% - 1.33rem); /* 3 items per row with gaps */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .featured-item img {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    border-radius: 4px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+    margin-bottom: 0.75rem;
+  }
+
+  .featured-item h3 {
+    margin: 0.5rem 0 0.25rem 0;
+    font-size: 1.25rem;
+    color: #222;
+  }
+
+  .featured-item p {
+    font-size: 0.95rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+
+  .featured-item a.button {
+    padding: 0.5rem 0.9rem;
+    background: #4169e1;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+
+  .featured-item a.button:hover {
+    background: #2746b3;
+  }
+
+  /* Responsive: stack items vertically on narrow screens */
+  @media (max-width: 900px) {
+    .featured-item {
+      flex: 1 1 100%;
+    }
   }
 
   /* ===== PROJECTS ===== */
@@ -236,6 +319,22 @@
     static and interactive visualisations — with an emphasis on Christian organisations, active travel,
     cycling, environment and social justice.
   </p>
+
+  <!-- FEATURED SECTION -->
+<section id="featured" style="margin-bottom: 3rem;">
+  <div class="featured-grid">
+    {#each featuredItems as item}
+      <div class="featured-item">
+        <img src={item.image} alt={item.title} />
+        <h3>{item.title}</h3>
+        <p>{item.description}</p>
+        {#if item.link}
+          <a class="button" href={item.link} target="_blank" rel="noopener">Buy</a>
+        {/if}
+      </div>
+    {/each}
+  </div>
+</section>
 
   <!-- PROJECTS -->
   <section id="projects" aria-label="portfolio">
