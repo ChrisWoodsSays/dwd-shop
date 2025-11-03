@@ -47,19 +47,19 @@
     // Example featured items array
     featuredItems = [
       {
-        image: '/images/JP2.jpg',
+        image: '/images/JP1 - IMG_7063 Portrait.jpg',
         title: 'Gospel Journey Planner',
         description: 'Plan your journey through the Bible with clarity and ease.',
         link: 'https://www.etsy.com/uk/listing/xxxx'
       },
       {
-        image: '/images/JP2.jpg',
+        image: '/images/JP2 - IMG_7078.jpg',
         title: 'Data Visualization Print',
         description: 'Beautifully designed print for data enthusiasts.',
         link: 'https://www.etsy.com/uk/listing/yyyy'
       },
       {
-        image: '/images/JP3.jpg',
+        image: '/images/JP3 IMG_7068.jpg',
         title: 'Interactive Dashboard',
         description: 'Engage with your data interactively online.',
         link: 'https://www.etsy.com/uk/listing/zzzz'
