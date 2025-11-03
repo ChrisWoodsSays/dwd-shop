@@ -143,80 +143,113 @@
   }
 
   /* ===== FEATURED ===== */
-  .featured-wrapper {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-  }
+ .featured-wrapper {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
 
-  .featured-container {
-    display: flex;
+.featured-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0;
+}
+
+/* Featured info: title + text + button */
+.featured-info {
+  display: flex;
+  flex-direction: column;       /* always stack title + text */
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+/* Wrap title and text in one block, button in separate flex row for wide screens */
+.featured-info-content {
+  display: flex;
+  flex-direction: column;      /* title + text stacked */
+  max-width: 800px;
+}
+
+.featured-info h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.5rem;
+  color: #222;
+}
+
+.featured-info p {
+  margin: 0;
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.45;
+}
+
+/* Button: wide screens right of text */
+.featured-info .button {
+  display: inline-block;
+  padding: 0.6rem 1.1rem;
+  background: #4169e1;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 600;
+  margin-top: 1rem;
+  align-self: flex-start;       /* default: below text, left-aligned */
+}
+
+.featured-info .button:hover {
+  background: #2746b3;
+}
+
+/* Wide screens: place button right of text */
+@media(min-width: 1100px) {
+  .featured-info {
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+  .featured-info .button {
+    align-self: flex-start;
+    margin-top: 0;
+  }
+}
+
+/* Medium screens: button below text, right-aligned */
+@media(max-width: 1100px) {
+  .featured-info {
     flex-direction: column;
     align-items: flex-start;
-    width: 100%;
-    padding: 0;
   }
-
-  .featured-info {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 1.5rem;
-    flex-wrap: wrap;
-  }
-
-  .featured-info h3 {
-    margin: 0 0 0.5rem 0;
-    font-size: 1.5rem;
-    color: #222;
-  }
-
-  .featured-info p {
-    margin: 0;
-    font-size: 1rem;
-    color: #333;
-    line-height: 1.45;
-    max-width: 70%;
-  }
-
   .featured-info .button {
-    display: inline-block;
-    padding: 0.6rem 1.1rem;
-    background: #4169e1;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 6px;
-    font-weight: 600;
-    margin-left: 1rem;
-    white-space: nowrap;
-    align-self: flex-start;
+    align-self: flex-end;
+    margin-top: 0.5rem;
   }
+}
 
-  .featured-info .button:hover {
-    background: #2746b3;
-  }
+/* Featured images grid */
+.featured-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  width: 100%;
+}
 
-  .featured-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    width: 100%;
-  }
+.featured-item {
+  flex: 1 1 340px;
+  display: flex;
+  justify-content: center;
+}
 
-  .featured-item {
-    flex: 1 1 340px;
-    display: flex;
-    justify-content: center;
-  }
+.featured-item img {
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+  display: block;
+}
 
-  .featured-item img {
-    width: 100%;
-    height: auto;
-    border-radius: 6px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
-    display: block;
-  }
+
 
   /* ===== PROJECTS ===== */
   .project {
@@ -303,22 +336,29 @@
   </p>
 
   <!-- FEATURED SECTION -->
-  <div class="featured-wrapper">
-    <div class="featured-container">
-      <div class="featured-info">
-        <h3>{featuredTitle}</h3>
-        <p>{featuredText}</p>
-        <a href={featuredLink} class="button" target="_blank" rel="noopener">Buy</a>
-      </div>
-      <div class="featured-grid">
-        {#each featuredItems as item}
-          <div class="featured-item">
-            <img src={item.image} alt={item.title} />
-          </div>
-        {/each}
-      </div>
+<div class="featured-wrapper">
+  <div class="featured-container">
+    <!-- Shared text + Buy button -->
+<div class="featured-info">
+  <div class="featured-info-content">
+    <h3>{featuredTitle}</h3>
+    <p>{featuredText}</p>
+  </div>
+  <a href={featuredLink} class="button" target="_blank" rel="noopener">Buy</a>
+</div>
+
+
+    <!-- Featured images grid -->
+    <div class="featured-grid">
+      {#each featuredItems as item}
+        <div class="featured-item">
+          <img src={item.image} alt={item.title} />
+        </div>
+      {/each}
     </div>
   </div>
+</div>
+
 
   <!-- PROJECTS -->
   <section id="projects" aria-label="portfolio">
