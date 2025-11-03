@@ -8,12 +8,10 @@
   const featuredLink = 'https://www.etsy.com/uk/listing/xxxx';
 
   onMount(async () => {
-    // Dynamically import GSAP and ScrollTrigger (browser only)
     const { gsap } = await import('gsap');
     const { ScrollTrigger } = await import('gsap/ScrollTrigger');
     gsap.registerPlugin(ScrollTrigger);
 
-    // Animate hero title and nav links
     gsap.from('.hero-title, .hero-nav a', {
       opacity: 0,
       y: 18,
@@ -22,7 +20,6 @@
       ease: 'power2.out'
     });
 
-    // Animate projects
     gsap.utils.toArray('.project').forEach((proj) => {
       const img = proj.querySelector('.project-image img');
       const content = proj.querySelector('.project-content');
@@ -31,11 +28,7 @@
           scale: 1.03,
           duration: 1.1,
           ease: 'power2.out',
-          scrollTrigger: {
-            trigger: proj,
-            start: 'top 90%',
-            toggleActions: 'play none none none'
-          }
+          scrollTrigger: { trigger: proj, start: 'top 90%', toggleActions: 'play none none none' }
         });
       }
       if (content) {
@@ -44,335 +37,230 @@
           y: 36,
           duration: 0.9,
           ease: 'power2.out',
-          scrollTrigger: {
-            trigger: proj,
-            start: 'top 85%',
-            toggleActions: 'play none none none'
-          }
+          scrollTrigger: { trigger: proj, start: 'top 85%', toggleActions: 'play none none none' }
         });
       }
     });
 
-    // Set featured items
     featuredItems = [
-      {
-        image: '/images/JP1 - IMG_7063 Portrait.jpg',
-        title: 'Gospel Journey Planner',
-        description: 'Plan your journey through the Bible with clarity and ease.',
-        link: 'https://www.etsy.com/uk/listing/xxxx'
-      },
-      {
-        image: '/images/JP2 - IMG_7078.jpg',
-        title: 'Data Visualization Print',
-        description: 'Beautifully designed print for data enthusiasts.',
-        link: 'https://www.etsy.com/uk/listing/yyyy'
-      },
-      {
-        image: '/images/JP3 IMG_7068.jpg',
-        title: 'Interactive Dashboard',
-        description: 'Engage with your data interactively online.',
-        link: 'https://www.etsy.com/uk/listing/zzzz'
-      }
+      { image: '/images/JP1 - IMG_7063 Portrait.jpg', title: 'Gospel Journey Planner', description: 'Plan your journey through the Bible with clarity and ease.', link: 'https://www.etsy.com/uk/listing/xxxx' },
+      { image: '/images/JP2 - IMG_7078.jpg', title: 'Data Visualization Print', description: 'Beautifully designed print for data enthusiasts.', link: 'https://www.etsy.com/uk/listing/yyyy' },
+      { image: '/images/JP3 IMG_7068.jpg', title: 'Interactive Dashboard', description: 'Engage with your data interactively online.', link: 'https://www.etsy.com/uk/listing/zzzz' }
     ];
   });
 </script>
 
-
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap');
 
-:global(body) {
-  margin: 0;
-  font-family: 'Comfortaa', cursive;
-  background: #fff;
-  color: #222;
-}
-
-main {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2.5rem 1.75rem;
-}
-
-/* ===== HERO ===== */
-.hero-top {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: start;
-  gap: 1rem;
-  margin-bottom: 1.25rem;
-  position: relative;
-}
-
-/* Keep title + nav stacked on the left */
-.hero-left {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.hero-title {
-  font-size: 2.2rem;
-  color: #4169e1;
-  margin: 0;
-}
-
-.hero-nav {
-  display: flex;
-  gap: 1.25rem;
-  flex-wrap: wrap;
-  font-weight: 600;
-}
-
-.hero-nav a {
-  color: #4169e1;
-  text-decoration: none;
-  font-size: 0.98rem;
-}
-
-.hero-nav a:hover {
-  color: #2746b3;
-}
-
-/* Top-right Buy button */
-.hero-buy-button {
-  display: inline-block;
-  padding: 0.6rem 1.1rem;
-  background: #4169e1;
-  color: #fff;
-  border-radius: 6px;
-  font-weight: 600;
-  text-decoration: none;
-  align-self: start;
-}
-
-.hero-buy-button:hover {
-  background: #2746b3;
-}
-
-/* ===== INTRO PARAGRAPH ===== */
-.hero-intro {
-  margin-bottom: 3rem;
-  color: #333;
-  line-height: 1.48;
-  font-size: 1.05rem;
-}
-
-/* Full-width helper class for intro & featured-info */
-.full-width {
-  max-width: 1200px;
-  margin: 0 auto 2rem auto;
-}
-
-/* ===== FEATURED SECTION ===== */
-.featured-section {
-  margin: 3rem 0;
-}
-
-.featured-grid {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 1rem;
-  flex-wrap: nowrap;
-}
-
-.featured-item {
-  flex: 1 1 0;
-  display: flex;
-  justify-content: center;
-}
-
-.featured-item img {
-  width: 100%;
-  max-width: 340px;
-  height: auto;
-  border-radius: 6px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
-  display: block;
-}
-
-/* Shared text + button below all three */
-.featured-info {
-  text-align: center;
-}
-
-.featured-info h3 {
-  margin: 0 0 0.5rem 0;
-  font-size: 1.5rem;
-  color: #222;
-}
-
-.featured-info p {
-  margin: 0 0 1rem 0;
-  color: #333;
-  line-height: 1.45;
-  font-size: 1rem;
-}
-
-.featured-info .button {
-  display: inline-block;
-  padding: 0.6rem 1.1rem;
-  background: #4169e1;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 6px;
-  font-weight: 600;
-}
-
-.featured-info .button:hover {
-  background: #2746b3;
-}
-
-/* ===== PROJECTS ===== */
-.project {
-  display: flex;
-  gap: 3rem;
-  align-items: flex-start;
-  margin: 4rem 0;
-  padding: 2rem 0;
-  border-top: 1px solid rgba(0,0,0,0.08);
-}
-
-.project:first-of-type {
-  border-top: none;
-  padding-top: 0;
-}
-
-.project.left-image {
-  flex-direction: row;
-}
-
-.project.right-image {
-  flex-direction: row-reverse;
-}
-
-.project-image {
-  flex: 1 1 45%;
-  min-width: 250px;
-  min-height: 320px;
-  overflow: hidden;
-  border: 1px solid rgba(0,0,0,0.08);
-  box-shadow: 0 8px 22px rgba(0,0,0,0.06);
-  border-radius: 4px;
-}
-
-.project-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 4px;
-  display: block;
-}
-
-.project-content {
-  flex: 1 1 45%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.project-content h2 {
-  margin: 0 0 0.75rem 0;
-  font-size: 1.6rem;
-  color: #222;
-}
-
-.project-content p {
-  margin: 0 0 0.5rem 0;
-  color: #333;
-  line-height: 1.45;
-  font-size: 1rem;
-}
-
-.project-content a.button {
-  display: inline-block;
-  padding: 0.5rem 0.9rem;
-  background: #4169e1;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 4px;
-  align-self: flex-start;
-  font-weight: 600;
-}
-
-.project-content a.button:hover {
-  background: #2746b3;
-}
-
-/* ===== SERVICES ===== */
-#services {
-  margin-top: 4rem;
-  padding-top: 2rem;
-  border-top: 1px solid rgba(0,0,0,0.08);
-}
-
-.services-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-.hero-profile-right {
-  width: 84px;
-  height: 84px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-/* ===== FOOTER ===== */
-footer {
-  margin-top: 4rem;
-  color: #777;
-  font-size: 0.95rem;
-}
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 980px) {
-  .project {
-    flex-direction: column !important;
+  :global(body) {
+    margin: 0;
+    font-family: 'Comfortaa', cursive;
+    background: #fff;
+    color: #222;
   }
-  .project-image, .project-content {
-    flex: 1 1 100%;
-  }
-  .project-image {
-    min-height: 220px;
-  }
-}
 
-@media (max-width: 900px) {
-  .featured-grid {
-    flex-wrap: wrap;
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2.5rem 1.75rem;
+  }
+
+  /* ===== HERO ===== */
+  .hero-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    position: sticky;
+    top: 0;
+    background: #fff;
+    z-index: 1000;
+    padding-bottom: 1rem; /* space below sticky header */
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .hero-title {
+    font-size: 2.2rem;
+    color: #4169e1;
+    margin: 0;
+  }
+
+  .hero-nav {
+    display: flex;
     gap: 1.25rem;
+    flex-wrap: wrap;
+    font-weight: 600;
   }
-  .featured-item {
-    flex: 1 1 100%;
+
+  .hero-nav a {
+    color: #4169e1;
+    text-decoration: none;
+    font-size: 0.98rem;
   }
-  .services-header {
+
+  .hero-nav a:hover {
+    color: #2746b3;
+  }
+
+  .hero-buy {
+    padding: 0.6rem 1.2rem;
+    background: #4169e1;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+  }
+
+  .hero-buy:hover {
+    background: #2746b3;
+  }
+
+  /* Intro full-width */
+  .hero-intro {
+    margin: 3rem 0;
+    color: #333;
+    line-height: 1.48;
+    font-size: 1.05rem;
+  }
+
+  /* ===== FEATURED ===== */
+  .featured-wrapper {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .featured-container {
+    display: flex;
     flex-direction: column;
     align-items: flex-start;
+    width: 100%;
+    max-width: none;
+    padding: 0;
   }
-  .hero-profile-right {
-    margin-top: 1rem;
-  }
-}
 
-@media (max-width: 520px) {
-  .hero-title {
-    font-size: 1.6rem;
+  .featured-info {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 1.5rem;
   }
-  .hero-intro {
+
+  .featured-info h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.5rem;
+    color: #222;
+  }
+
+  .featured-info p {
+    margin: 0 0 1rem 0;
     font-size: 1rem;
+    color: #333;
+    line-height: 1.45;
   }
-  .hero-profile-right {
-    width: 68px;
-    height: 68px;
-  }
-}
 
+  .featured-info .button {
+    display: inline-block;
+    padding: 0.6rem 1.1rem;
+    background: #4169e1;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+  }
+
+  .featured-info .button:hover {
+    background: #2746b3;
+  }
+
+  .featured-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .featured-item {
+    flex: 1 1 340px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .featured-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+    display: block;
+  }
+
+  /* ===== PROJECTS ===== */
+  .project {
+    display: flex;
+    gap: 3rem;
+    align-items: flex-start;
+    margin: 4rem 0;
+    padding: 2rem 0;
+    border-top: 1px solid rgba(0,0,0,0.08);
+  }
+
+  .project:first-of-type {
+    border-top: none;
+    padding-top: 0;
+  }
+
+  .project.left-image { flex-direction: row; }
+  .project.right-image { flex-direction: row-reverse; }
+
+  .project-image { flex: 1 1 45%; min-width: 250px; min-height: 320px; overflow: hidden; border-radius: 4px; }
+  .project-image img { width: 100%; height: 100%; object-fit: cover; border-radius: 4px; }
+
+  .project-content { flex: 1 1 45%; display: flex; flex-direction: column; justify-content: space-between; }
+  .project-content h2 { margin: 0 0 0.75rem 0; font-size: 1.6rem; color: #222; }
+  .project-content p { margin: 0 0 0.5rem 0; color: #333; line-height: 1.45; font-size: 1rem; }
+  .project-content a.button { padding: 0.5rem 0.9rem; background: #4169e1; color: #fff; border-radius: 4px; text-decoration: none; font-weight: 600; }
+  .project-content a.button:hover { background: #2746b3; }
+
+  /* ===== SERVICES ===== */
+  #services {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  #services img {
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  /* ===== FOOTER ===== */
+  footer { margin-top: 4rem; color: #777; font-size: 0.95rem; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 980px) {
+    .project { flex-direction: column !important; }
+    .project-image, .project-content { flex: 1 1 100%; }
+    .project-image { min-height: 220px; }
+    #services { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  }
+
+  @media (max-width: 520px) {
+    .hero-title { font-size: 1.6rem; }
+    .hero-intro { font-size: 1rem; }
+    #services img { width: 68px; height: 68px; }
+  }
 </style>
-
 
 <main>
   <!-- HERO -->
@@ -384,38 +272,37 @@ footer {
         <a href="#services">My Services</a>
       </nav>
     </div>
-
-    <!-- Top-right Buy button replaces profile image -->
-    <a href={featuredLink} class="hero-buy-button" target="_blank" rel="noopener">
-      Buy Gospel Journey Planner
-    </a>
+    <a href={featuredLink} class="hero-buy" target="_blank" rel="noopener">Buy Gospel Journey Planner</a>
   </div>
 
-  <!-- INTRO PARAGRAPH (full width like featured images) -->
-  <p class="hero-intro full-width">
+  <!-- INTRO PARAGRAPH (full width) -->
+  <p class="hero-intro">
     Data, insight and design, mixed with technology, enable us to see what's going on in the world,
     tell stories that matter, and make a difference. I help organisations communicate clearly with
     static and interactive visualisations — with an emphasis on Christian organisations, active travel,
     cycling, environment and social justice.
   </p>
 
-  <!-- Gospel Journey Planner text & button, full width -->
-  <div class="featured-info full-width">
-    <h3>{featuredTitle}</h3>
-    <p>{featuredText}</p>
-    <a href={featuredLink} class="button" target="_blank" rel="noopener">Buy</a>
-  </div>
+  <!-- FEATURED SECTION -->
+  <div class="featured-wrapper">
+    <div class="featured-container">
+      <!-- Shared text + Buy button -->
+      <div class="featured-info">
+        <h3>{featuredTitle}</h3>
+        <p>{featuredText}</p>
+        <a href={featuredLink} class="button" target="_blank" rel="noopener">Buy</a>
+      </div>
 
-  <!-- Featured Section -->
-  <section id="featured">
-    <div class="featured-grid">
-      {#each featuredItems as item}
-        <div class="featured-item">
-          <img src={item.image} alt={item.title} />
-        </div>
-      {/each}
+      <!-- Featured images grid -->
+      <div class="featured-grid">
+        {#each featuredItems as item}
+          <div class="featured-item">
+            <img src={item.image} alt={item.title} />
+          </div>
+        {/each}
+      </div>
     </div>
-  </section>
+  </div>
 
   <!-- PROJECTS -->
   <section id="projects" aria-label="portfolio">
@@ -439,12 +326,10 @@ footer {
     {/each}
   </section>
 
-  <!-- SERVICES (profile image moved here) -->
+  <!-- SERVICES -->
   <section id="services">
-    <div class="services-header">
-      <h2>My Services</h2>
-      <img src="/images/Chris Nov 24 Square.jpg" alt="Chris Woods" class="hero-profile-right"/>
-    </div>
+    <h2>My Services</h2>
+    <img src="/images/Chris Nov 24 Square.jpg" alt="Chris Woods" />
     <p>Describe your services here. This section is linked from the top nav.</p>
   </section>
 
@@ -453,4 +338,3 @@ footer {
     <p>© Chris Woods 2016–25</p>
   </footer>
 </main>
-
