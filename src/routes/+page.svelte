@@ -3,9 +3,7 @@
   import { projects } from '$lib/data/projects.js';
 
   let featuredItems = [];
-  const featuredTitle = 'Gospel Journey Planner';
-  const featuredText = 'Beautifully designed visual guides to help you explore the Gospel story. Printed on high-quality art paper — perfect for gifts or study spaces.';
-  const featuredLink = 'https://www.etsy.com/uk/listing/xxxx';
+  const shopLink = 'https://www.etsy.com/shop/drawingwithdata';
 
   onMount(async () => {
     const { gsap } = await import('gsap');
@@ -45,7 +43,7 @@
     featuredItems = [
       { image: '/images/JP1 - IMG_7063 Portrait.jpg', title: 'Gospel Journey Planner', description: 'Plan your journey through the Bible with clarity and ease.', link: 'https://www.etsy.com/uk/listing/xxxx' },
       { image: '/images/JP2 - IMG_7078.jpg', title: 'Data Visualization Print', description: 'Beautifully designed print for data enthusiasts.', link: 'https://www.etsy.com/uk/listing/yyyy' },
-      { image: '/images/JP3 IMG_7068.jpg', title: 'Interactive Dashboard', description: 'Engage with your data interactively online.', link: 'https://www.etsy.com/uk/listing/zzzz' }
+      { image: '/images/JP4 IMG_7023 3.jpg', title: 'Interactive Dashboard', description: 'Engage with your data interactively online.', link: 'https://www.etsy.com/uk/listing/zzzz' }
     ];
   });
 </script>
@@ -94,7 +92,7 @@
   .hero-nav {
     display: flex;
     gap: 1.25rem;
-    flex-wrap: nowrap; /* prevent unnecessary wrapping */
+    flex-wrap: nowrap;
     font-weight: 600;
   }
 
@@ -109,20 +107,22 @@
     color: #2746b3;
   }
 
-  .hero-buy {
-    font-size: 0.85rem;
+  /* unified button style for all buttons */
+  .button, .hero-buy {
+    display: inline-block;
     padding: 0.5rem 0.8rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
     background: #4169e1;
     color: #fff;
-    text-decoration: none;
     border-radius: 6px;
-    font-weight: 600;
-    align-self: flex-start; 
-    white-space: normal; /* allows wrapping on small screens */
     text-align: center;
+    white-space: normal; /* allow wrapping */
+    align-self: flex-start;
   }
 
-  .hero-buy:hover {
+  .button:hover, .hero-buy:hover {
     background: #2746b3;
   }
 
@@ -143,113 +143,97 @@
   }
 
   /* ===== FEATURED ===== */
- .featured-wrapper {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-.featured-container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding: 0;
-}
-
-/* Featured info: title + text + button */
-.featured-info {
-  display: flex;
-  flex-direction: column;       /* always stack title + text */
-  width: 100%;
-  margin-bottom: 1.5rem;
-}
-
-/* Wrap title and text in one block, button in separate flex row for wide screens */
-.featured-info-content {
-  display: flex;
-  flex-direction: column;      /* title + text stacked */
-  max-width: 800px;
-}
-
-.featured-info h3 {
-  margin: 0 0 0.5rem 0;
-  font-size: 1.5rem;
-  color: #222;
-}
-
-.featured-info p {
-  margin: 0;
-  font-size: 1rem;
-  color: #333;
-  line-height: 1.45;
-}
-
-/* Button: wide screens right of text */
-.featured-info .button {
-  display: inline-block;
-  padding: 0.6rem 1.1rem;
-  background: #4169e1;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 6px;
-  font-weight: 600;
-  margin-top: 1rem;
-  align-self: flex-start;       /* default: below text, left-aligned */
-}
-
-.featured-info .button:hover {
-  background: #2746b3;
-}
-
-/* Wide screens: place button right of text */
-@media(min-width: 1100px) {
-  .featured-info {
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 2rem;
+  .featured-wrapper {
+    width: 100%;
+    margin: 0;
+    padding: 0;
   }
-  .featured-info .button {
-    align-self: flex-start;
-    margin-top: 0;
-  }
-}
 
-/* Medium screens: button below text, right-aligned */
-@media(max-width: 1100px) {
-  .featured-info {
+  .featured-container {
+    display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    width: 100%;
+    padding: 0;
   }
-  .featured-info .button {
-    align-self: flex-end;
-    margin-top: 0.5rem;
+
+  .featured-info {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 1.5rem;
   }
-}
 
-/* Featured images grid */
-.featured-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  width: 100%;
-}
+  .featured-info-content {
+    display: flex;
+    flex-direction: column;
+    max-width: 800px;
+  }
 
-.featured-item {
-  flex: 1 1 340px;
-  display: flex;
-  justify-content: center;
-}
+  .featured-info h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.5rem;
+    color: #222;
+  }
 
-.featured-item img {
-  width: 100%;
-  height: auto;
-  border-radius: 6px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
-  display: block;
-}
+  .featured-info p {
+    margin: 0;
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.45;
+  }
 
+  /* wide screens: button right of text */
+  @media(min-width: 1100px) {
+    .featured-info {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 2rem;
+    }
 
+    .featured-info-content {
+      max-width: 900px;
+    }
+
+    .featured-info .button {
+      align-self: flex-start;
+      margin-top: 0;
+    }
+  }
+
+  /* medium/narrow screens: button below text, right-aligned */
+  @media(max-width: 1100px) {
+    .featured-info {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .featured-info .button {
+      align-self: flex-end;
+      margin-top: 0.5rem;
+    }
+  }
+
+  /* Featured images grid */
+  .featured-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .featured-item {
+    flex: 1 1 340px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .featured-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+    display: block;
+  }
 
   /* ===== PROJECTS ===== */
   .project {
@@ -267,13 +251,51 @@
   .project.right-image { flex-direction: row-reverse; }
 
   .project-image { flex: 1 1 45%; min-width: 250px; min-height: 320px; overflow: hidden; border-radius: 4px; }
+.project-image {
+  flex: 1 1 45%;
+  min-width: 250px;
+  min-height: 320px;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  height: 0;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0; /* removes any iframe border */
+}
+
+
+  
   .project-image img { width: 100%; height: 100%; object-fit: cover; border-radius: 4px; }
 
-  .project-content { flex: 1 1 45%; display: flex; flex-direction: column; justify-content: space-between; }
+  .project-content {
+    flex: 1 1 45%;
+    display: flex;
+    flex-direction: column;
+  }
+
   .project-content h2 { margin: 0 0 0.75rem 0; font-size: 1.6rem; color: #222; }
   .project-content p { margin: 0 0 0.5rem 0; color: #333; line-height: 1.45; font-size: 1rem; }
-  .project-content a.button { padding: 0.5rem 0.9rem; background: #4169e1; color: #fff; border-radius: 4px; text-decoration: none; font-weight: 600; }
-  .project-content a.button:hover { background: #2746b3; }
+
+  /* project buttons shrink to content */
+  .project-content a.button {
+    display: inline-block;
+    align-self: flex-start;
+    margin-top: 1rem;
+  }
 
   /* ===== SERVICES ===== */
   #services {
@@ -324,7 +346,7 @@
         <a href="#services">My Services</a>
       </nav>
     </div>
-    <a href={featuredLink} class="hero-buy" target="_blank" rel="noopener">Buy Gospel Journey Planner</a>
+    <a href={shopLink} class="hero-buy" target="_blank" rel="noopener">Buy Gospel Journey Planner</a>
   </div>
 
   <!-- INTRO PARAGRAPH -->
@@ -336,58 +358,61 @@
   </p>
 
   <!-- FEATURED SECTION -->
-<div class="featured-wrapper">
-  <div class="featured-container">
-    <!-- Shared text + Buy button -->
-<div class="featured-info">
-  <div class="featured-info-content">
-    <h3>{featuredTitle}</h3>
-    <p>{featuredText}</p>
-  </div>
-  <a href={featuredLink} class="button" target="_blank" rel="noopener">Buy</a>
-</div>
-
-
-    <!-- Featured images grid -->
-    <div class="featured-grid">
-      {#each featuredItems as item}
-        <div class="featured-item">
-          <img src={item.image} alt={item.title} />
+  <div class="featured-wrapper">
+    <div class="featured-container">
+      <div class="featured-info">
+        <div class="featured-info-content">
+          <h3>Gospel Journey Planner</h3>
+          <p>The Gospel Journey Planner is a beautifully designed data visualisation that helps you explore how stories of Jesus’ Identity, Parables, Miracles, Key Teachings and Landmark Events weave and connect through the gospels, through a clean, clear, and compelling layout.</p>
+          <br/>
+          <p>An original design that invites thought and conversation.  Printed with archival inks on poster or fine art paper. Perfect for gifts, dining rooms or study spaces.</p>
         </div>
-      {/each}
+        <a href={shopLink} class="button" target="_blank" rel="noopener">Buy Gospel Journey Planner</a>
+      </div>
+
+      <div class="featured-grid">
+        {#each featuredItems as item}
+          <div class="featured-item">
+            <img src={item.image} alt={item.title} />
+          </div>
+        {/each}
+      </div>
     </div>
   </div>
-</div>
-
 
   <!-- PROJECTS -->
-  <section id="projects" aria-label="portfolio">
-    {#each projects as project, i}
-      <article class="project {i % 2 === 0 ? 'left-image' : 'right-image'}">
+<section id="projects" aria-label="portfolio">
+  {#each projects as project, i}
+    <article class="project {i % 2 === 0 ? 'left-image' : 'right-image'}">
+      <div class="project-content">
+        <h2>{project.title}</h2>
+        <p>{project.description}</p>
+        {#if project.link}
+          <a class="button" href={project.link} target="_blank" rel="noopener">
+            {project.featured ? 'Buy Gospel Journey Planner' : 'View Project'}
+          </a>
+        {/if}
+      </div>
 
-        <div class="project-content">
-          <div><h2>{project.title}</h2></div>
-          <div>
-            <p>{project.description}</p>
-            {#if project.link}
-              <a class="button" href={project.link} target="_blank" rel="noopener">
-                {project.featured ? 'Buy Print' : 'View Project'}
-              </a>
-            {/if}
-          </div>
-        </div>
+<div class="project-image" aria-hidden="true">
+  {#if project.media?.includes('youtu')}
+    <div class="video-wrapper">
+      <iframe
+        src={"https://www.youtube.com/embed/" + project.media.split('/').pop() + "?autoplay=1&mute=1&loop=1&playlist=" + project.media.split('/').pop() + "&controls=0&modestbranding=1&rel=0"}
+        title={project.title}
+        frameborder="0"
+        allow="autoplay; encrypted-media"
+        allowfullscreen>
+      </iframe>
+    </div>
+  {:else}
+    <img src={project.media || project.image} alt={project.title} />
+  {/if}
+</div>
+    </article>
+  {/each}
+</section>
 
-
-
-        <div class="project-image" aria-hidden="true">
-          <img src={project.image} alt={project.title} />
-        </div>
-
-
-        
-      </article>
-    {/each}
-  </section>
 
   <!-- SERVICES -->
   <section id="services">
