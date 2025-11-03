@@ -359,6 +359,7 @@
     </div>
 
     <img src="/images/Chris Nov 24 Square.jpg" alt="Chris Woods" class="hero-profile" />
+    
   </div>
 
   <!-- INTRO PARAGRAPH -->
@@ -368,6 +369,12 @@
     static and interactive visualisations — with an emphasis on Christian organisations, active travel,
     cycling, environment and social justice.
   </p>
+  <!-- Shared title, text, and button below all images -->
+  <div class="featured-info">
+    <h3>{featuredTitle}</h3>
+    <p>{featuredText}</p>
+    <a href={featuredLink} class="button" target="_blank" rel="noopener">Buy</a>
+  </div>
 
 <!-- Featured Section -->
 <section id="featured">
@@ -379,12 +386,7 @@
     {/each}
   </div>
 
-  <!-- Shared title, text, and button below all images -->
-  <div class="featured-info">
-    <h3>{featuredTitle}</h3>
-    <p>{featuredText}</p>
-    <a href={featuredLink} class="button" target="_blank" rel="noopener">Buy</a>
-  </div>
+
 </section>
 
 
