@@ -1,16 +1,19 @@
 <script>
   import { onMount } from 'svelte';
-  import { gsap } from 'gsap';
-  import { ScrollTrigger } from 'gsap/ScrollTrigger';
   import { projects } from '$lib/data/projects.js';
+
   let featuredItems = [];
-    const featuredTitle = 'Gospel Journey Planner';
-    const featuredText = 'Beautifully designed visual guides to help you explore the Gospel story. Printed on high-quality art paper — perfect for gifts or study spaces.';
+  const featuredTitle = 'Gospel Journey Planner';
+  const featuredText = 'Beautifully designed visual guides to help you explore the Gospel story. Printed on high-quality art paper — perfect for gifts or study spaces.';
   const featuredLink = 'https://www.etsy.com/uk/listing/xxxx';
 
-  gsap.registerPlugin(ScrollTrigger);
+  onMount(async () => {
+    // Dynamically import GSAP and ScrollTrigger (browser only)
+    const { gsap } = await import('gsap');
+    const { ScrollTrigger } = await import('gsap/ScrollTrigger');
+    gsap.registerPlugin(ScrollTrigger);
 
-  onMount(() => {
+    // Animate hero title and nav links
     gsap.from('.hero-title, .hero-nav a', {
       opacity: 0,
       y: 18,
@@ -19,32 +22,38 @@
       ease: 'power2.out'
     });
 
+    // Animate projects
     gsap.utils.toArray('.project').forEach((proj) => {
-      gsap.from(proj.querySelector('.project-image img'), {
-        scale: 1.03,
-        duration: 1.1,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: proj,
-          start: 'top 90%',
-          toggleActions: 'play none none none'
-        }
-      });
-      gsap.from(proj.querySelector('.project-content'), {
-        opacity: 0,
-        y: 36,
-        duration: 0.9,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: proj,
-          start: 'top 85%',
-          toggleActions: 'play none none none'
-        }
-      });
+      const img = proj.querySelector('.project-image img');
+      const content = proj.querySelector('.project-content');
+      if (img) {
+        gsap.from(img, {
+          scale: 1.03,
+          duration: 1.1,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: proj,
+            start: 'top 90%',
+            toggleActions: 'play none none none'
+          }
+        });
+      }
+      if (content) {
+        gsap.from(content, {
+          opacity: 0,
+          y: 36,
+          duration: 0.9,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: proj,
+            start: 'top 85%',
+            toggleActions: 'play none none none'
+          }
+        });
+      }
     });
 
-
-    // Example featured items array
+    // Set featured items
     featuredItems = [
       {
         image: '/images/JP1 - IMG_7063 Portrait.jpg',
@@ -65,11 +74,9 @@
         link: 'https://www.etsy.com/uk/listing/zzzz'
       }
     ];
-
-
-
   });
 </script>
+
 
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap');
