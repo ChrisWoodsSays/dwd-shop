@@ -70,13 +70,13 @@
   .hero-top {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     gap: 1rem;
     position: sticky;
     top: 0;
     background: #fff;
     z-index: 1000;
-    padding-bottom: 1rem; /* space below sticky header */
+    padding-bottom: 1rem;
   }
 
   .hero-left {
@@ -94,7 +94,7 @@
   .hero-nav {
     display: flex;
     gap: 1.25rem;
-    flex-wrap: wrap;
+    flex-wrap: nowrap; /* prevent unnecessary wrapping */
     font-weight: 600;
   }
 
@@ -102,6 +102,7 @@
     color: #4169e1;
     text-decoration: none;
     font-size: 0.98rem;
+    white-space: nowrap;
   }
 
   .hero-nav a:hover {
@@ -109,21 +110,33 @@
   }
 
   .hero-buy {
-    padding: 0.6rem 1.2rem;
+    font-size: 0.85rem;
+    padding: 0.5rem 0.8rem;
     background: #4169e1;
     color: #fff;
     text-decoration: none;
     border-radius: 6px;
     font-weight: 600;
+    align-self: flex-start; 
+    white-space: normal; /* allows wrapping on small screens */
+    text-align: center;
   }
 
   .hero-buy:hover {
     background: #2746b3;
   }
 
-  /* Intro full-width */
+  @media (max-width: 520px) {
+    .hero-buy {
+      font-size: 0.75rem;
+      padding: 0.4rem 0.6rem;
+    }
+  }
+
+  /* Intro full width */
   .hero-intro {
     margin: 3rem 0;
+    width: 100%;
     color: #333;
     line-height: 1.48;
     font-size: 1.05rem;
@@ -141,14 +154,16 @@
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
-    max-width: none;
     padding: 0;
   }
 
   .featured-info {
     width: 100%;
-    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
     margin-bottom: 1.5rem;
+    flex-wrap: wrap;
   }
 
   .featured-info h3 {
@@ -158,10 +173,11 @@
   }
 
   .featured-info p {
-    margin: 0 0 1rem 0;
+    margin: 0;
     font-size: 1rem;
     color: #333;
     line-height: 1.45;
+    max-width: 70%;
   }
 
   .featured-info .button {
@@ -172,6 +188,9 @@
     text-decoration: none;
     border-radius: 6px;
     font-weight: 600;
+    margin-left: 1rem;
+    white-space: nowrap;
+    align-self: flex-start;
   }
 
   .featured-info .button:hover {
@@ -183,7 +202,6 @@
     flex-wrap: wrap;
     gap: 1rem;
     width: 100%;
-    justify-content: flex-start;
   }
 
   .featured-item {
@@ -210,10 +228,7 @@
     border-top: 1px solid rgba(0,0,0,0.08);
   }
 
-  .project:first-of-type {
-    border-top: none;
-    padding-top: 0;
-  }
+  .project:first-of-type { border-top: none; padding-top: 0; }
 
   .project.left-image { flex-direction: row; }
   .project.right-image { flex-direction: row-reverse; }
@@ -232,6 +247,9 @@
     margin-top: 4rem;
     padding-top: 2rem;
     border-top: 1px solid rgba(0,0,0,0.08);
+  }
+
+  #services .services-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -244,21 +262,22 @@
     object-fit: cover;
   }
 
-  /* ===== FOOTER ===== */
-  footer { margin-top: 4rem; color: #777; font-size: 0.95rem; }
+  #services p {
+    margin-top: 1rem;
+  }
 
-  /* ===== RESPONSIVE ===== */
   @media (max-width: 980px) {
     .project { flex-direction: column !important; }
     .project-image, .project-content { flex: 1 1 100%; }
     .project-image { min-height: 220px; }
-    #services { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    #services .services-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    #services img { width: 68px; height: 68px; }
   }
 
   @media (max-width: 520px) {
     .hero-title { font-size: 1.6rem; }
     .hero-intro { font-size: 1rem; }
-    #services img { width: 68px; height: 68px; }
+    .featured-info p { max-width: 100%; margin-bottom: 0.5rem; }
   }
 </style>
 
@@ -275,7 +294,7 @@
     <a href={featuredLink} class="hero-buy" target="_blank" rel="noopener">Buy Gospel Journey Planner</a>
   </div>
 
-  <!-- INTRO PARAGRAPH (full width) -->
+  <!-- INTRO PARAGRAPH -->
   <p class="hero-intro">
     Data, insight and design, mixed with technology, enable us to see what's going on in the world,
     tell stories that matter, and make a difference. I help organisations communicate clearly with
@@ -286,14 +305,11 @@
   <!-- FEATURED SECTION -->
   <div class="featured-wrapper">
     <div class="featured-container">
-      <!-- Shared text + Buy button -->
       <div class="featured-info">
         <h3>{featuredTitle}</h3>
         <p>{featuredText}</p>
         <a href={featuredLink} class="button" target="_blank" rel="noopener">Buy</a>
       </div>
-
-      <!-- Featured images grid -->
       <div class="featured-grid">
         {#each featuredItems as item}
           <div class="featured-item">
@@ -308,9 +324,7 @@
   <section id="projects" aria-label="portfolio">
     {#each projects as project, i}
       <article class="project {i % 2 === 0 ? 'left-image' : 'right-image'}">
-        <div class="project-image" aria-hidden="true">
-          <img src={project.image} alt={project.title} />
-        </div>
+
         <div class="project-content">
           <div><h2>{project.title}</h2></div>
           <div>
@@ -322,14 +336,25 @@
             {/if}
           </div>
         </div>
+
+
+
+        <div class="project-image" aria-hidden="true">
+          <img src={project.image} alt={project.title} />
+        </div>
+
+
+        
       </article>
     {/each}
   </section>
 
   <!-- SERVICES -->
   <section id="services">
-    <h2>My Services</h2>
-    <img src="/images/Chris Nov 24 Square.jpg" alt="Chris Woods" />
+    <div class="services-header">
+      <h2>My Services</h2>
+      <img src="/images/Chris Nov 24 Square.jpg" alt="Chris Woods" />
+    </div>
     <p>Describe your services here. This section is linked from the top nav.</p>
   </section>
 
